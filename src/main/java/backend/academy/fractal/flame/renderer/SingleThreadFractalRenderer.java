@@ -1,5 +1,6 @@
-package backend.academy.fractal.flame;
+package backend.academy.fractal.flame.renderer;
 
+import backend.academy.fractal.flame.AffineTransformation;
 import backend.academy.fractal.flame.model.FractalImage;
 import backend.academy.fractal.flame.model.Pixel;
 import backend.academy.fractal.flame.model.Point;
@@ -8,7 +9,7 @@ import backend.academy.fractal.flame.model.Rgb;
 import backend.academy.fractal.flame.transformations.Transformation;
 import java.util.Random;
 
-public class SingleThreadFractalRenderer {
+public class SingleThreadFractalRenderer implements FractalRenderer {
     private static final Rect WORLD = new Rect(-1.0, -1.0, 1.0, 1.0);
     private static final Random RANDOM = new Random();
     private static final Integer MISSED_ITERATIONS = -20;
