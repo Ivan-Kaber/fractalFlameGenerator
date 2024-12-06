@@ -2,7 +2,6 @@ package backend.academy.fractal.flame.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import java.util.Arrays;
 
 @Getter
 @Setter
@@ -21,9 +20,5 @@ public class FractalImage {
                 data[i][j] = new Pixel(new Point(i, j));
             }
         }
-    }
-
-    private boolean contains(int x, int y) {
-        return x >= 0 && x < width && y >= 0 && y < height;
     }
 }
