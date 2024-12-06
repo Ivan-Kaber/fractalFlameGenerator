@@ -9,6 +9,7 @@ import lombok.Getter;
 public class AffineTransformation {
     private static final Random RANDOM = new Random();
     private static final Integer MAX_RGB_VALUE = 255;
+    private static final Double BORDERS = 1.5;
 
     private double a;
     private double b;
@@ -26,12 +27,12 @@ public class AffineTransformation {
 
     private void generateRandomCoefficients() {
         do {
-            a = getRandomValue(1.5);
-            b = getRandomValue(1.5);
-            c = getRandomValue(3.5);
-            d = getRandomValue(1.5);
-            e = getRandomValue(1.5);
-            f = getRandomValue(3.5);
+            a = getRandomValue(BORDERS);
+            b = getRandomValue(BORDERS);
+            c = getRandomValue(BORDERS + 2);
+            d = getRandomValue(BORDERS);
+            e = getRandomValue(BORDERS);
+            f = getRandomValue(BORDERS + 2);
         } while (!isValidTransformation());
     }
 
@@ -42,9 +43,9 @@ public class AffineTransformation {
     }
 
     private boolean isValidTransformation() {
-        return (Math.pow(a, 2) + Math.pow(d, 2) < 1) &&
-               (Math.pow(b, 2) + Math.pow(e, 2) < 1) &&
-               (Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(d, 2) + Math.pow(e, 2) < 1 + Math.pow(a * e - b * d, 2));
+        return (Math.pow(a, 2) + Math.pow(d, 2) < 1)
+               && (Math.pow(b, 2) + Math.pow(e, 2) < 1)
+               && (Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(d, 2) + Math.pow(e, 2) < 1 + Math.pow(a * e - b * d, 2));
     }
 
     private double getRandomValue(double boundaries) {
