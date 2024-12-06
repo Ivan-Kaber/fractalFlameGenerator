@@ -1,4 +1,4 @@
-package backend.academy.fractal.flame;
+package backend.academy.fractal.flame.transformations;
 
 import backend.academy.fractal.flame.model.Point;
 import backend.academy.fractal.flame.model.Rgb;
