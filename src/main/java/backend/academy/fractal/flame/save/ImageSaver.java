@@ -9,7 +9,9 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.imageio.ImageIO;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public final class ImageSaver {
     private static final String SAVE_PATH = "./src/main/resources/examples";
     private final static int RED_CONFIG_VALUE = 16;
@@ -43,8 +45,9 @@ public final class ImageSaver {
     }
 
     private static int parseRGB(Pixel pixel) {
-        return (pixel.rgb().red() << RED_CONFIG_VALUE) | (pixel.rgb().green() << GREEN_CONFIG_VALUE) |
-               pixel.rgb().blue();
+        return (pixel.rgb().red() << RED_CONFIG_VALUE)
+               | (pixel.rgb().green() << GREEN_CONFIG_VALUE)
+               | pixel.rgb().blue();
     }
 
 }
