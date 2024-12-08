@@ -24,23 +24,15 @@ public final class ImageSaver {
                 bufferedImage.setRGB((int) value.point().x(), (int) value.point().y(), parseRGB(value));
             }
         }
-        String extension = switch (format) {
-            case JPEG -> "jpg";
-            case PNG -> "png";
-            case BMP -> "bmp";
-        };
 
         try {
-            File outputFile = Path.of(
-                SAVE_PATH,
+            File outputFile = Path.of(SAVE_PATH,
                 "Fractal-"
-                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH.mm.ss-MM-dd-yyyy"))
-                + "."
-                + format
-            ).toFile();
-            ImageIO.write(bufferedImage, extension, outputFile);
+                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH.mm.ss-MM-dd-yyyy."))
+                + format).toFile();
+            ImageIO.write(bufferedImage, format.name(), outputFile);
         } catch (IOException e) {
-            throw new RuntimeException("Error saving image to file");
+            throw new RuntimeException("Error saving image to file ", e);
         }
     }
 
