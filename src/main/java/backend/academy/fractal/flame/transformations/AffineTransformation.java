@@ -4,8 +4,10 @@ import backend.academy.fractal.flame.model.Point;
 import backend.academy.fractal.flame.model.Rgb;
 import java.security.SecureRandom;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class AffineTransformation {
     private static final SecureRandom RANDOM = new SecureRandom();
     private static final Integer MAX_RGB_VALUE = 255;
@@ -23,6 +25,12 @@ public class AffineTransformation {
         generateRandomCoefficients();
         generateRandomColors();
         return this;
+    }
+
+    public Point applyTransformation(Point point) {
+        double newX = a * point.x() + b * point.y() + c;
+        double newY = d * point.x() + e * point.y() + f;
+        return new Point(newX, newY);
     }
 
     private void generateRandomCoefficients() {
@@ -50,11 +58,5 @@ public class AffineTransformation {
 
     private double getRandomValue(double boundaries) {
         return boundaries * RANDOM.nextDouble() * Math.pow(-1, RANDOM.nextInt(0, 2));
-    }
-
-    public Point applyTransformation(Point point) {
-        double newX = a * point.x() + b * point.y() + c;
-        double newY = d * point.x() + e * point.y() + f;
-        return new Point(newX, newY);
     }
 }

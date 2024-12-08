@@ -144,6 +144,17 @@ public class ConsoleLogic {
         }
     }
 
+    public void isNeedTimer(String answer) {
+        if ("Y".equalsIgnoreCase(answer)) {
+            isNeedTimer = true;
+        } else if ("N".equalsIgnoreCase(answer)) {
+            isNeedTimer = false;
+        } else {
+            out.print(INVALID_DATA);
+            isNeedTimer(scanner.nextLine());
+        }
+    }
+
     private void createFractalImage() {
         FractalImage image = new FractalImage(widthSize, heightSize);
         fractalRenderer.generate(
@@ -159,17 +170,6 @@ public class ConsoleLogic {
             image,
             imageFormat
         );
-    }
-
-    public void isNeedTimer(String answer) {
-        if ("Y".equalsIgnoreCase(answer)) {
-            isNeedTimer = true;
-        } else if ("N".equalsIgnoreCase(answer)) {
-            isNeedTimer = false;
-        } else {
-            out.print(INVALID_DATA);
-            isNeedTimer(scanner.nextLine());
-        }
     }
 
     private void addTransformation(String id) {
