@@ -2,12 +2,12 @@ package backend.academy.fractal.flame.transformations;
 
 import backend.academy.fractal.flame.model.Point;
 import backend.academy.fractal.flame.model.Rgb;
-import java.util.Random;
+import java.security.SecureRandom;
 import lombok.Getter;
 
 @Getter
 public class AffineTransformation {
-    private static final Random RANDOM = new Random();
+    private static final SecureRandom RANDOM = new SecureRandom();
     private static final Integer MAX_RGB_VALUE = 255;
     private static final Double BORDERS = 1.5;
 
