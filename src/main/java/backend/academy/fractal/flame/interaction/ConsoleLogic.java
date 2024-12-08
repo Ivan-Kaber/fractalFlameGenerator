@@ -39,7 +39,7 @@ public class ConsoleLogic {
     }
 
     public void selectSize(String size, boolean isWidth) {
-        if (StringUtils.isNumeric(size) && Integer.parseInt(size) >= 0) {
+        if (StringUtils.isNumeric(size) && Integer.parseInt(size) > 0) {
             if (isWidth) {
                 widthSize = Integer.valueOf(size);
             } else {
@@ -69,19 +69,39 @@ public class ConsoleLogic {
     }
 
     public void selectAffineCoefficients(String number) {
-        countOfAffineCoefficients = validateParameters(number);
+        if (StringUtils.isNumeric(number) && Integer.parseInt(number) > 0) {
+            countOfAffineCoefficients = Integer.valueOf(number);
+        } else {
+            out.print(INVALID_DATA);
+            selectAffineCoefficients(scanner.nextLine());
+        }
     }
 
     public void selectSamples(String number) {
-        samples = validateParameters(number);
+        if (StringUtils.isNumeric(number) && Integer.parseInt(number) > 0) {
+            samples = Integer.valueOf(number);
+        } else {
+            out.print(INVALID_DATA);
+            selectSamples(scanner.nextLine());
+        }
     }
 
     public void selectIterPerSample(String number) {
-        iterPerSample = validateParameters(number);
+        if (StringUtils.isNumeric(number) && Integer.parseInt(number) > 0) {
+            iterPerSample = Integer.valueOf(number);
+        } else {
+            out.print(INVALID_DATA);
+            selectIterPerSample(scanner.nextLine());
+        }
     }
 
     public void selectSymmetry(String number) {
-        symmetry = validateParameters(number);
+        if (StringUtils.isNumeric(number) && Integer.parseInt(number) > 0) {
+            symmetry = Integer.valueOf(number);
+        } else {
+            out.print(INVALID_DATA);
+            selectSymmetry(scanner.nextLine());
+        }
     }
 
     public void selectGamma(String number) {
@@ -117,22 +137,28 @@ public class ConsoleLogic {
     public void generateImage() {
         if (isNeedTimer) {
             long timer = System.currentTimeMillis();
-            FractalImage image = new FractalImage(widthSize, heightSize);
-            fractalRenderer.generate(
-                image,
-                samples,
-                iterPerSample,
-                symmetry,
-                countOfAffineCoefficients,
-                transformations
-            );
-            new LogGammaCorrection().process(image, gamma);
-            ImageSaver.save(
-                image,
-                imageFormat
-            );
+            createFractalImage();
             out.println("Time: " + TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - timer) + " sec");
+        } else {
+            createFractalImage();
         }
+    }
+
+    private void createFractalImage() {
+        FractalImage image = new FractalImage(widthSize, heightSize);
+        fractalRenderer.generate(
+            image,
+            samples,
+            iterPerSample,
+            symmetry,
+            countOfAffineCoefficients,
+            transformations
+        );
+        new LogGammaCorrection().process(image, gamma);
+        ImageSaver.save(
+            image,
+            imageFormat
+        );
     }
 
     public void isNeedTimer(String answer) {
@@ -144,16 +170,6 @@ public class ConsoleLogic {
             out.print(INVALID_DATA);
             isNeedTimer(scanner.nextLine());
         }
-    }
-
-    private Integer validateParameters(String number) {
-        if (StringUtils.isNumeric(number) && Integer.parseInt(number) > 0) {
-            return Integer.valueOf(number);
-        } else {
-            out.print(INVALID_DATA);
-            validateParameters(scanner.nextLine());
-        }
-        return 0;
     }
 
     private void addTransformation(String id) {
