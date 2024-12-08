@@ -48,7 +48,7 @@ public class ConsoleLogic {
         } else {
             out.print("""
                 \nYou entered incorrect data, please try again, \
-                enter an image dimension value in the range from 0 to 5000:\s""");
+                enter an image dimension value in the range from 1 to 5000:\s""");
             selectSize(scanner.nextLine(), isWidth);
         }
     }

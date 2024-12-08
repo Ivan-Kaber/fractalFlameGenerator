@@ -41,10 +41,10 @@ public class ConsoleInterface {
             Welcome to Fractal Flame!%n\
             Let`s enter a data for the image! Do not use extremely large values %n\
             to avoid memory overflow and increased execution time. %n\
-            Enter a width - a number in the range from 0 to 5000:\s""");
+            Enter a width - a number in the range from 1 to 5000:\s""");
         consoleLogic.selectSize(scanner.nextLine(), true);
 
-        out.print("\nEnter a height - a number in the range from 0 to 5000: ");
+        out.print("\nEnter a height - a number in the range from 1 to 5000: ");
         consoleLogic.selectSize(scanner.nextLine(), false);
     }
 
