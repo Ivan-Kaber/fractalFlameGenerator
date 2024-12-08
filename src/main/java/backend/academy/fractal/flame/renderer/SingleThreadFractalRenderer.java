@@ -24,9 +24,9 @@ public class SingleThreadFractalRenderer extends FractalRenderer {
         List<Transformation> transformations, Point point,
         AffineTransformation affineTransformation
     ) {
-        point = affineTransformation.applyTransformation(point);
-        point = transformations.get(RANDOM.nextInt(0, transformations.size())).apply(point);
-        return point;
+        Point newPoint = affineTransformation.applyTransformation(point);
+        newPoint = transformations.get(RANDOM.nextInt(0, transformations.size())).apply(newPoint);
+        return newPoint;
     }
 
     @Override
@@ -36,8 +36,8 @@ public class SingleThreadFractalRenderer extends FractalRenderer {
 
     @Override
     Point getRandomPoint() {
-        double x = RANDOM.nextDouble(world.x(), world.width());
-        double y = RANDOM.nextDouble(world.y(), world.height());
+        double x = RANDOM.nextDouble(WORLD.x(), WORLD.width());
+        double y = RANDOM.nextDouble(WORLD.y(), WORLD.height());
         return new Point(x, y);
     }
 }

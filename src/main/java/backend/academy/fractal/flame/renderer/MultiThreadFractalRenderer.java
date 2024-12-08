@@ -31,9 +31,9 @@ public class MultiThreadFractalRenderer extends FractalRenderer {
         List<Transformation> transformations, Point point,
         AffineTransformation affineTransformation
     ) {
-        point = affineTransformation.applyTransformation(point);
-        point = transformations.get(ThreadLocalRandom.current().nextInt(0, transformations.size())).apply(point);
-        return point;
+        Point newPoint = affineTransformation.applyTransformation(point);
+        newPoint = transformations.get(ThreadLocalRandom.current().nextInt(0, transformations.size())).apply(newPoint);
+        return newPoint;
     }
 
     @Override
@@ -43,8 +43,8 @@ public class MultiThreadFractalRenderer extends FractalRenderer {
 
     @Override
     Point getRandomPoint() {
-        double x = ThreadLocalRandom.current().nextDouble(world.x(), world.width());
-        double y = ThreadLocalRandom.current().nextDouble(world.y(), world.height());
+        double x = ThreadLocalRandom.current().nextDouble(WORLD.x(), WORLD.width());
+        double y = ThreadLocalRandom.current().nextDouble(WORLD.y(), WORLD.height());
         return new Point(x, y);
     }
 }

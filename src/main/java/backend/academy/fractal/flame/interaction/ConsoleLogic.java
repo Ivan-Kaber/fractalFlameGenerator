@@ -31,6 +31,7 @@ public class ConsoleLogic {
     private final List<Transformation> transformations = new ArrayList<>();
     private ImageFormat imageFormat;
     private boolean isNeedTimer = false;
+    private static final String INVALID_DATA = "\nYou entered incorrect data, please try again: ";
 
     public ConsoleLogic(PrintStream out, Scanner scanner) {
         this.out = out;
@@ -40,9 +41,9 @@ public class ConsoleLogic {
     public void selectSize(String size, boolean isWidth) {
         if (StringUtils.isNumeric(size) && Integer.parseInt(size) >= 0) {
             if (isWidth) {
-                widthSize = Integer.parseInt(size);
+                widthSize = Integer.valueOf(size);
             } else {
-                heightSize = Integer.parseInt(size);
+                heightSize = Integer.valueOf(size);
             }
         } else {
             out.print("""
@@ -85,10 +86,9 @@ public class ConsoleLogic {
 
     public void selectGamma(String number) {
         if (isParsableAsDouble(number) && Double.parseDouble(number) > 0) {
-            gamma = Double.parseDouble(number);
+            gamma = Double.valueOf(number);
         } else {
-            out.print("""
-                \nYou entered incorrect data, please try again:\s""");
+            out.print(INVALID_DATA);
             selectGamma(scanner.nextLine());
         }
     }
@@ -99,8 +99,7 @@ public class ConsoleLogic {
             if (TransformationName.contains(string)) {
                 addTransformation(string);
             } else {
-                out.print("""
-                    \nYou entered incorrect data, please try again:\s""");
+                out.print(INVALID_DATA);
                 selectTransformations(scanner.nextLine());
             }
         }
@@ -110,8 +109,7 @@ public class ConsoleLogic {
         if (ImageFormat.contains(number)) {
             imageFormat = ImageFormat.getById(Integer.parseInt(number));
         } else {
-            out.print("""
-                \nYou entered incorrect data, please try again:\s""");
+            out.print(INVALID_DATA);
             selectImageFormat(scanner.nextLine());
         }
     }
@@ -133,7 +131,7 @@ public class ConsoleLogic {
                 image,
                 imageFormat
             );
-            System.out.println("Time: " + TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - timer) + " sec");
+            out.println("Time: " + TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - timer) + " sec");
         }
     }
 
@@ -143,18 +141,16 @@ public class ConsoleLogic {
         } else if ("N".equalsIgnoreCase(answer)) {
             isNeedTimer = false;
         } else {
-            out.print("""
-                \nYou entered incorrect data, please try again:\s""");
+            out.print(INVALID_DATA);
             isNeedTimer(scanner.nextLine());
         }
     }
 
     private Integer validateParameters(String number) {
         if (StringUtils.isNumeric(number) && Integer.parseInt(number) > 0) {
-            return Integer.parseInt(number);
+            return Integer.valueOf(number);
         } else {
-            out.print("""
-                \nYou entered incorrect data, please try again:\s""");
+            out.print(INVALID_DATA);
             validateParameters(scanner.nextLine());
         }
         return 0;

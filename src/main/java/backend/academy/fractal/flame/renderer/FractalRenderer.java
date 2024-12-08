@@ -1,15 +1,18 @@
 package backend.academy.fractal.flame.renderer;
 
-import backend.academy.fractal.flame.model.*;
+import backend.academy.fractal.flame.model.FractalImage;
+import backend.academy.fractal.flame.model.Pixel;
+import backend.academy.fractal.flame.model.Point;
+import backend.academy.fractal.flame.model.Rect;
+import backend.academy.fractal.flame.model.Rgb;
 import backend.academy.fractal.flame.transformations.AffineTransformation;
 import backend.academy.fractal.flame.transformations.Transformation;
-
 import java.util.List;
 
 public abstract class FractalRenderer {
     private static final Integer MISSED_ITERATIONS = -20;
     private FractalImage fractalImage;
-    static final Rect world = new Rect(-1.0, -1.0, 1.0, 1.0);
+    static final Rect WORLD = new Rect(-1.0, -1.0, 1.0, 1.0);
 
     public void generate(
         FractalImage image, int samples, int iterPerSamples, int countOfSymmetric,
@@ -47,19 +50,20 @@ public abstract class FractalRenderer {
         int i, int countOfSymmetric, Point point,
         AffineTransformation[] affineTransformation, int randomAffineIndex
     ) {
+        Point newPoint;
         if (i > 0) {
             double theta2 = 0;
             for (int j = 0; j < countOfSymmetric; theta2 += (Math.PI * 2 / countOfSymmetric), j++) {
-                point = rotate(point, theta2);
+                newPoint = rotate(point, theta2);
 
-                if (!world.contains(point)) {
+                if (!WORLD.contains(newPoint)) {
                     continue;
                 }
 
                 int width = fractalImage.width();
                 int height = fractalImage.height();
-                int x1 = width - (int) ((world.width() - point.x()) / (2 * world.width()) * width);
-                int y1 = height - (int) ((world.height() - point.y()) / (2 * world.height()) * height);
+                int x1 = width - (int) ((WORLD.width() - newPoint.x()) / (2 * WORLD.width()) * width);
+                int y1 = height - (int) ((WORLD.height() - newPoint.y()) / (2 * WORLD.height()) * height);
                 Point point1 = new Point(x1, y1);
 
                 if (point1.x() < width && point1.y() < height) {
