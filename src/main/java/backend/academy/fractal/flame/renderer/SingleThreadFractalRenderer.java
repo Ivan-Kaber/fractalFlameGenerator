@@ -4,6 +4,7 @@ import backend.academy.fractal.flame.model.Point;
 import backend.academy.fractal.flame.transformations.AffineTransformation;
 import backend.academy.fractal.flame.transformations.Transformation;
 import java.security.SecureRandom;
+import java.util.List;
 
 public class SingleThreadFractalRenderer extends FractalRenderer {
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -11,7 +12,7 @@ public class SingleThreadFractalRenderer extends FractalRenderer {
     @Override
     void renderSamples(
         int samples, int iterPerSamples, int countOfSymmetric,
-        Transformation[] transformations, AffineTransformation[] affineTransformation
+        List<Transformation> transformations, AffineTransformation[] affineTransformation
     ) {
         for (int i = 0; i < samples; i++) {
             render(iterPerSamples, countOfSymmetric, affineTransformation, transformations);
@@ -20,11 +21,11 @@ public class SingleThreadFractalRenderer extends FractalRenderer {
 
     @Override
     Point applyAffineTransformation(
-        Transformation[] transformations, Point point,
+        List<Transformation> transformations, Point point,
         AffineTransformation affineTransformation
     ) {
         point = affineTransformation.applyTransformation(point);
-        point = transformations[RANDOM.nextInt(0, transformations.length)].apply(point);
+        point = transformations.get(RANDOM.nextInt(0, transformations.size())).apply(point);
         return point;
     }
 

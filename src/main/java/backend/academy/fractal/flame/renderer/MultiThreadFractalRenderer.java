@@ -4,6 +4,7 @@ import backend.academy.fractal.flame.model.Point;
 import backend.academy.fractal.flame.transformations.AffineTransformation;
 import backend.academy.fractal.flame.transformations.Transformation;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
@@ -15,7 +16,7 @@ public class MultiThreadFractalRenderer extends FractalRenderer {
     @Override
     void renderSamples(
         int samples, int iterPerSamples, int countOfSymmetric,
-        Transformation[] transformations, AffineTransformation[] affineTransformation
+        List<Transformation> transformations, AffineTransformation[] affineTransformation
     ) {
         try (ExecutorService executorService = Executors.newFixedThreadPool(THREADS_AMOUNT)) {
             for (int i = 0; i < samples; i++) {
@@ -27,11 +28,11 @@ public class MultiThreadFractalRenderer extends FractalRenderer {
 
     @Override
     Point applyAffineTransformation(
-        Transformation[] transformations, Point point,
+        List<Transformation> transformations, Point point,
         AffineTransformation affineTransformation
     ) {
         point = affineTransformation.applyTransformation(point);
-        point = transformations[ThreadLocalRandom.current().nextInt(0, transformations.length)].apply(point);
+        point = transformations.get(ThreadLocalRandom.current().nextInt(0, transformations.size())).apply(point);
         return point;
     }
 

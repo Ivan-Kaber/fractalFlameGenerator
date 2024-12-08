@@ -4,6 +4,8 @@ import backend.academy.fractal.flame.model.*;
 import backend.academy.fractal.flame.transformations.AffineTransformation;
 import backend.academy.fractal.flame.transformations.Transformation;
 
+import java.util.List;
+
 public abstract class FractalRenderer {
     private static final Integer MISSED_ITERATIONS = -20;
     private FractalImage fractalImage;
@@ -11,7 +13,7 @@ public abstract class FractalRenderer {
 
     public void generate(
         FractalImage image, int samples, int iterPerSamples, int countOfSymmetric,
-        int countOfAffineCoefficients, Transformation... transformations
+        int countOfAffineCoefficients, List<Transformation> transformations
     ) {
         this.fractalImage = image;
         AffineTransformation[] affineTransformation = initializeAffineTransformations(countOfAffineCoefficients);
@@ -21,7 +23,7 @@ public abstract class FractalRenderer {
 
     void render(
         int iterPerSamples, int countOfSymmetric,
-        AffineTransformation[] affineTransformation, Transformation[] transformations
+        AffineTransformation[] affineTransformation, List<Transformation> transformations
     ) {
         Point point = getRandomPoint();
 
@@ -93,11 +95,11 @@ public abstract class FractalRenderer {
 
     abstract void renderSamples(
         int samples, int iterPerSamples, int countOfSymmetric,
-        Transformation[] transformations, AffineTransformation[] affineTransformation
+        List<Transformation> transformations, AffineTransformation[] affineTransformation
     );
 
     abstract Point applyAffineTransformation(
-        Transformation[] transformations, Point point,
+        List<Transformation> transformations, Point point,
         AffineTransformation affineTransformation
     );
 
